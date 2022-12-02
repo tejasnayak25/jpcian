@@ -1,0 +1,368 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container container2 ">
+    <div class="slideshow-container w-100 ">
+          <div id="mySlides">
+          <img id="slideImg" src="media/mainImg.png" onclick="" style="width:100%; height:100%">
+          </div>
+    </div>
+</div>
+
+
+
+<div class="w-100 main2 card  p-3" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;border-bottom:0;">
+  <h1 class="desc">JnanaGanga P.U. College</h1>
+  <h6>The College Of Your Dreams!</h6>
+  <div class="w-100 card border-head">
+    <b class="px-3 py-2 text-head">Features:</b>
+    <ul class="px-5 py-2 text-head" style="margin-top:-10px;">
+      <li class="text-head">Reputed College</li>
+      <li class="text-head">Vast Playground</li>
+    </ul>
+  </div>
+  <h2>Staff</h2>
+  <div class="principal">
+    <div class="bg-head staff " style="background-image:url({{ principal.profile.url }});background-size: cover;" onclick="window.open('{% url 'main-staff' principal.name %}', '_self')"></div>
+  </div>
+  <div class="otherStaff" style="margin-bottom:25px;">
+    {% for person in staff %}
+    <div class="bg-head staff " style="background-image:url({{ person.profile.url }});background-size: cover;" onclick="window.open('{% url 'main-staff' person.name %}', '_self')"></div>
+    {% endfor %}
+  </div>
+
+
+  
+  
+</div>
+
+
+
+
+        <style>
+
+          .cards{
+            column-count:2;
+            column-gap:0.5em;
+            max-width:1200px;
+            margin:0 auto;
+            padding:0px;
+            margin-bottom:25px;
+          }
+
+          .card_wrapper{
+            {% comment %} background-color:#eee; {% endcomment %}
+            display:inline-block;
+            margin:0 0 0.5em;
+            width:100%;
+            padding:25px;
+          }
+
+          .gallery{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-direction:row;
+            flex-wrap:wrap;
+          }
+
+          .gallery div{
+            width:48%;
+          }
+
+          .gallery .high-50, .cards .high-50{
+            height:100px;
+          }
+
+          .gallery .high-100, .cards .high-100{
+            height:200px;
+          }
+
+          .otherStaff{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-direction:row;
+            flex-wrap:wrap;
+          }
+
+          
+
+          @media only screen and (max-width: 420px) {
+            
+
+            .cards{
+              column-count:2;
+            }
+          }
+
+
+            .classes{
+                display:flex;
+                flex-wrap:wrap;
+                flex-direction:row;
+                gap:10px;
+                margin-bottom:25px;
+            }
+
+            .classes div{
+                width:48%;
+                {% comment %} height:80px; {% endcomment %}
+                {% comment %} border-radius:10px; {% endcomment %}
+            }
+        </style>
+{% endblock content %}
+
+
+{% block sidebar %}
+
+<div class="w-100 main2 card  p-3" style="border-radius:0;border-top:0;">
+
+<h2>Events Gallery<span style="position:absolute;right:15px;font-size:16px;font-weight:normal;padding-top:2px;" onclick="window.open('{% url 'main-events' %}', '_self');" class="text-head">See All</span></h2>
+<div id="cards" class="cards">
+
+  {% for event in events %}
+    <div class="card_wrapper shadow-lg" style="background-image:url({{ event.cover.url }});background-size:cover;" onclick="window.open('{% url 'event-info' event.title %}', '_self');"></div>
+  {% endfor %}
+
+  <script>
+    document.getElementById("cards").firstElementChild.classList.add("high-50");
+    document.getElementById("cards").firstElementChild.nextElementSibling.classList.add("high-50");
+    document.getElementById("cards").firstElementChild.nextElementSibling.nextElementSibling.classList.add("high-100");
+  </script>
+</div>
+
+
+<h2>College View<span style="position:absolute;right:15px;font-size:16px;font-weight:normal;padding-top:2px;" onclick="window.open('{% url 'main-college' %}', '_self');" class="text-head">See All</span></h2>
+<div id="cards2" class="cards">
+  {% for image in images %}
+    <div class="card_wrapper shadow-lg" style="background-image:url({{ image.cover.url }});background-size:cover;" onclick="window.open('{% url 'college-view' image.title %}', '_self');"></div>
+  {% endfor %}
+
+  <script>
+    document.getElementById("cards2").firstElementChild.classList.add("high-50");
+    document.getElementById("cards2").firstElementChild.nextElementSibling.classList.add("high-50");
+    document.getElementById("cards2").firstElementChild.nextElementSibling.nextElementSibling.classList.add("high-100");
+  </script>
+</div>
+
+
+<h2>Courses Offered</h2>
+<div class="cards" style="margin-bottom:25px;">
+  <div class="card_wrapper bg-head text-main btn" onclick="window.open('{% url 'main-course' 'pcmb' %}', '_self');">PCMB</div>
+  <div class="card_wrapper bg-head text-main btn" onclick="window.open('{% url 'main-course' 'pcmc' %}', '_self');">PCMC</div>
+  <div class="card_wrapper bg-head text-main btn" onclick="window.open('{% url 'main-course' 'base' %}', '_self');">BASE</div>
+  <div class="card_wrapper bg-head text-main btn" onclick="window.open('{% url 'main-course' 'basc' %}', '_self');">BASC</div>
+</div>
+{% comment %} <div class="gallery" style="margin-bottom:25px;">
+  <a class="btn btn-primary bg-head">Apply Now!</a>
+</div> {% endcomment %}
+
+
+<h2>Toppers</h2>
+<div class="flexbox" style="margin-bottom:25px;">
+  <div class="high-100 px-3 btn btn-light" style="padding-top:5rem;max-height:200px;"><</div>
+  <div id="topper-main" style="flex-grow:3;" class="high-100 card p-3">
+    <div class="principal">
+      <div class="bg-head staff " style="height:70px;width:70px;background-image:url({{ toppers.first.profile.url }});background-size: cover;"></div>
+    </div>
+    <p class="text-head" style="text-align:center;">
+      {{ toppers.first.name }}<br>
+      Batch: {{ toppers.first.batch }}<br>
+      Marks: {{ toppers.first.marks }}<br>
+    </p>
+  </div>
+  <div class="high-100 px-3 btn btn-light" style="padding-top:5rem;max-height:200px;">></div>
+</div>
+
+
+
+<script>
+  var names = [];
+  var batch = [];
+  var marks = [];
+  var profile = [];
+  let i=0;
+
+  
+
+  {% for topper in toppers %}
+    names[i] = '{{ topper.name }}';
+    batch[i] = '{{ topper.batch }}';
+    marks[i] = '{{ topper.marks }}';
+    profile[i] = '{{ topper.profile.url }}';
+    i++;
+  {% endfor %}
+
+  
+
+  
+  let host = document.getElementById("topper-main");
+  host.previousElementSibling.onclick = function() {
+    prevTopper();
+    host.previousElementSibling.onclick = function() {
+      prevTopper();
+    }
+  }
+
+  host.nextElementSibling.onclick = function() {
+    nextTopper();
+    host.nextElementSibling.onclick = function() {
+      nextTopper();
+    }
+  }
+
+
+  for(i=0;i<profile.length;i++) {
+    console.log(names[i]);
+    console.log(batch[i]);
+  }
+
+  var current = 0;
+  function prevTopper() {
+    let host = document.getElementById("topper-main");
+    if(current === 0){
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[profile.length - 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[names.length - 1]}<br>
+        Batch: ${batch[batch.length - 1]}<br>
+        Marks: ${marks[marks.length - 1]}<br>
+      </p>
+    </div>`;
+    current = names.length - 1;
+    } else {
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[current - 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[current - 1]}<br>
+        Batch: ${batch[current - 1]}<br>
+        Marks: ${marks[current - 1]}<br>
+      </p>
+    </div>`;
+    current--;
+    }
+  }
+
+
+
+  function nextTopper() {
+    let host = document.getElementById("topper-main");
+    if(current === (names.length - 1)){
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[0]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[0]}<br>
+        Batch: ${batch[0]}<br>
+        Marks: ${marks[0]}<br>
+      </p>
+    </div>`;
+    current = 0;
+    } else {
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[current + 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[current + 1]}<br>
+        Batch: ${batch[current + 1]}<br>
+        Marks: ${marks[current + 1]}<br>
+      </p>
+    </div>`;
+    current++;
+    }
+  }
+
+
+</script>
+
+
+
+<h2>Bus Service</h2>
+<div class="cards">
+  <div class="high-50 card_wrapper bg-head"> hi</div>
+  <div class="high-50 card_wrapper bg-head"> hi</div>
+  <div class="high-100 card_wrapper bg-head"> hi</div>
+</div>
+<div class="gallery" style="margin-bottom:25px;">
+  <a class="btn btn-primary bg-head" href="{% url 'main-routes' %}">Check Routes!</a>
+</div>
+
+<h2>Share</h2>
+<div class="synopsis p-0 shadow-lg">
+  <div class="container w-100 contribute" style="background-image:url(../media/Invite.png);"></div>
+  <h5 class="mt-2 w-100">Share and help us grow!</h5><br>
+  <button class="btn btn-dark material-icons mb-3 bg-steel" onclick="shareNow();">share</button>
+</div>
+
+</div>
+
+<div class="footer container p-3">
+  <h2 class="text-main pt-2">JnanaGanga</h2>
+  <p class="mt-4">{{ address.value }}</p>
+  <p>{{ email.value }}</p>
+  <p>{{ phone_no.value }}</p>
+  <div class="flexbox" style="justify-content:center;">
+    <a class="btn btn-dark uil-instagram" href="{{ instagram.value }}"></a>
+    <a class="btn btn-dark uil-twitter" href="{{ twitter.value }}"></a>
+    <a class="btn btn-dark uil-facebook" href="{{ facebook.value }}"></a>
+  </div>
+
+  <p class="text-muted mt-4 uil-copyright" style="text-align:center;">-2022 JnanaGanga P.U. College</p>
+</div>
+
+<style>
+
+  .footer{
+    background:#1c202d;
+  }
+
+  .footer h2{
+    text-align:center;
+  }
+
+  .content{
+    background:transparent;
+    padding:0;
+  }
+
+  .flexbox{
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    gap:5px;
+  }
+  .high-100{
+    height:200px;
+  }
+
+  .contribute{
+    height:200px;
+    background-size:cover;
+    background-repeat:no-repeat;
+  }
+  .synopsis{
+    color:#17a2b8;
+    padding:10px;
+    margin-bottom:18pt;
+    border:1px solid #3b4460;
+    border-radius:5px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .synopsis h5{
+    text-align:center;
+    padding:5px;
+  }
+
+  .synopsis button{
+    border:1px solid #3b4460;
+  }
+</style>
+
+{% endblock sidebar %}

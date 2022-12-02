@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="w-100 container">
+    {% if form %}
+    <form method="POST">
+        {% csrf_token %}
+        
+        <legend class="mb-4 text-head" style="border-bottom:1px solid #17a2b8;">Check Routes</legend>
+        <fieldset class="form-group">
+            {{ form|crispy }}
+            <button class="btn btn-outline-info material-icons" type="submit">search</button>
+        </fieldset>
+            
+        <script>
+            document.getElementById("id_route").placeholder = "Search locality";
+        </script>
+        
+        <style>
+            .textinput{
+                border:1px solid #17a2b8;
+            }
+            #div_id_route label{
+                display:none;
+            }
+            fieldset{
+                display:flex;
+                flex-wrap:wrap;
+                flex-direction:row;
+                gap:5px;
+            }
+            fieldset input{
+                width:115% !important;
+                border-top-right-radius:0 !important;
+                border-bottom-right-radius:0 !important;
+                border-right:0 !important;
+            }
+            fieldset button{
+                height:38px;
+                margin-left:25px;
+                border-top-left-radius:0 !important;
+                border-bottom-left-radius:0 !important;
+                border-left:0 !important;
+            }
+            p{
+                color:#022e57;
+            }
+            .content{
+                background:transparent;
+            }
+        </style>
+    </form>
+    {% endif %}
+
+    {% if not count == undefined %}
+        <h2>Results({{ count }})</h2>
+    {% endif %}
+
+    {% if results %}
+        {% for result in results %}
+            <div class="container card p-3">
+            <p><u style="color:#000;">Locality:</u> {{ result.locality }}</p>
+            <p><u style="color:#000;">Bus No.:</u> {{ result.bus_no }}</p>
+            <p><u style="color:#000;">Fees:</u> {{ result.fees }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

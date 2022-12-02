@@ -1,0 +1,222 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container p-3">
+    {% comment %} <h2 class="pb-4 bb1">Welcome {{ user.username }}</h2> {% endcomment %}
+    {% comment %} <div class="w-100 main-div">
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'system' %}">Edit System Vars</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'contacts' %}">View Contacts</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'staff' %}">Edit Staff</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'course' %}">Edit Course</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'toppers' %}">Edit Toppers</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'events' %}">Edit Events</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'images' %}">Edit College Images</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'routes' %}">Edit Routes</a>
+    </div> {% endcomment %}
+    
+    <h1>{{ var.capitalize }}</h1>
+
+    {% for char in data %}
+        {% if var == 'system' %}
+            <div class="card container p-3 flexbox">
+                <p>{{ char.var }}: </p>
+                <p>{{ char.value }}</p>
+                {% comment %} <button class="btn btn-outline-secondary uil-pen">edit</button> {% endcomment %}
+                <a class="btn btn-primary py-0" style="" href="{% url 'edit-system' char.var %}">Edit</a>
+            </div>
+        {% elif var == 'contacts' %}
+            <div class="card container p-3 flexbox">
+                <p class="w-100"><u style="color:black;">Name:</u> {{ char.name }}</p>
+                <p class="w-100"><u style="color:black;">Email:</u> {{ char.email }}</p>
+                <p class="w-100"><u style="color:black;">Message:</u> {{ char.message }}</p>
+                {% if char.replied == "No" %}
+                    <p class="w-100"><u style="color:black;">Replied:</u> <button class="btn btn-danger">{{ char.replied }}</button><a class="btn btn-tertiary btn-link" href="{% url 'edit-contacts' char.message %}">Set as Replied!</a></p>
+                {% elif char.replied == 'Yes' %}
+                    <p class="w-100"><u style="color:black;">Replied:</u> <button class="btn btn-success">{{ char.replied }}</button></p>
+                {% endif %}
+            </div>
+        
+        {% endif %}
+        {% comment %} <button class="btn btn-dark">{{ char }}</button> {% endcomment %}
+    {% endfor %}
+    {% if var == 'staff' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-staff' %}">New Staff</a>
+        </div>
+    {% elif var == 'course' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-course' %}">New Course</a>
+        </div>
+    {% elif var == 'toppers' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-topper' %}">New Topper</a>
+        </div>
+    {% elif var == 'events' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-event' %}">New Event</a>
+        </div>
+    {% elif var == 'images' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-image' %}">New Image</a>
+        </div>
+    {% elif var == 'routes' %}
+        <div class="container card">
+            <img src="../media/Support.png">
+            <a class="btn btn-primary w-100 mb-3" href="{% url 'new-route' %}">New Route</a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .desc{
+        background:lightgray;
+        border-radius:0;
+        border:0;
+    }
+    .desc2{
+        background:white;
+        border-radius:0;
+        border:0;
+    }
+    .center{
+        justify-content:center;
+    }
+    .text-center{
+        text-align:center;
+    }
+    .flexbox{
+        display:flex;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:5px;
+        margin-bottom:10px;
+    }
+    p, small {
+        color:#000;
+        padding:0;
+        margin-bottom:5px;
+    }
+    .content{
+        background:transparent;
+    }
+
+    .bb1{
+        border-bottom: 1px solid #1c202d;
+    }
+
+    .main-div{
+        display:grid;
+        grid-template-columns: repeat(2,1fr);
+        gap:0.5em;
+    }
+
+    .main-div a{
+          {% comment %} background-color:#eee; {% endcomment %}
+          display:inline-block;
+          margin:0 0 0.5em;
+          width:100%;
+          padding:25px;
+    }
+
+    .grid-2{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+        width:100%;
+    }
+
+    .grid-2 a{
+        width:100%;
+    }
+
+
+    @media only screen and (max-width: 420px) {
+        .main-div{
+            grid-template-columns: none;
+            gap:0.1em;
+        }
+        .main-div a{
+            padding:15px;
+        }
+    }
+</style>
+{% endblock content %}
+
+{% block sidebar %}
+    {% for char in data %}
+        {% if var == 'staff' %}
+            <div class="card container p-3 flexbox center">
+                <img class="staff2" src="{{ char.profile.url }}">
+                <hr class="w-100">
+                <p class="w-100 text-center" style="margin-top:-10px;">{{ char.name }}</p>
+                <p class="w-50 btn btn-success" style="">{{ char.gender }}</p>
+                <p class="w-100 btn">Education: {{ char.education }}</p>
+                <p class="w-100 btn btn-outline-dark">Subject: {{ char.subject }}</p>
+                <p class="w-100 btn desc">Exp: {{ char.exp }}</p>
+                <p class="w-100 px-3 py-2 card text-muted">Bio: {{ char.bio }}</p>
+                <hr class="w-100" style="margin-top:-5px;">
+                <a class="btn btn-primary" style="width:48%;" href="{% url 'edit-staff' char.name %}">Edit</a>
+                <a class="btn btn-danger" style="width:48%;" href="{% url 'delete-staff' char.name %}">Delete</a>
+            </div>
+            {% elif var == 'course' %}
+            <div class="card container p-3 flexbox">
+                <p class="w-100"><u style="color:black;">Name:</u> {{ char.name|upper }}</p>
+                <p class="w-100"><u style="color:black;">Fees:</u> {{ char.fees }}</p>
+                <p class="w-100"><u style="color:black;">Subjects:</u> {{ char.subjects }}</p>
+
+                {% if char.seats_ava == "No" %}
+                    <p class="w-100"><u style="color:black;">Seats Available:</u> {{ char.seats_ava }}</p>
+                {% elif char.seats_ava == 'Yes' %}
+                    <p class="w-100"><u style="color:black;">Seats Available:</u> {{ char.seats_ava }}</p>
+                {% endif %}
+                <div class="grid-2">
+                <a class="btn btn-primary w-100" href="{% url 'edit-course' char.name %}">Edit</a>
+                <a class="btn btn-danger w-100" href="{% url 'delete-course' char.name %}">Delete</a>
+                </div>
+            </div>
+            {% elif var == 'toppers' %}
+            <div class="card container p-3 flexbox center text-center">
+                <img class="staff2" src="{{ char.profile.url }}">
+                <hr class="w-100">
+                <p class="w-100" style="margin-top:-10px;">{{ char.name }}</p>
+                <p class="w-100 btn btn-outline-dark">Course: {{ char.course|upper }}</p>
+                <p class="w-100 btn desc">Batch: {{ char.batch }}</p>
+                <p class="w-100 btn desc2">Marks: {{ char.marks }}</p>
+                <hr class="w-100" style="margin-top:-5px;">
+                <a class="btn btn-primary" style="width:48%;" href="{% url 'edit-topper' char.name %}">Edit</a>
+                <a class="btn btn-danger" style="width:48%;" href="{% url 'delete-topper' char.name %}">Delete</a>
+            </div>
+            {% elif var == 'events' %}
+            <div class="card container p-3 flexbox center">
+                <img class="w-100" src="{{ char.cover.url }}">
+                <p class="w-100" style="">{{ char.title }}</p>
+                <small class="w-100 text-muted" style="margin-top:-10px;">{{ char.date_posted }}</small>
+                <p class="w-100 card px-3 py-2">{{ char.description }}</p>
+                {% comment %} <hr class="w-100" style="margin-top:-5px;"> {% endcomment %}
+                <a class="btn btn-primary" style="width:48%;" href="{% url 'edit-event' char.title %}">Edit</a>
+                <a class="btn btn-danger" style="width:48%;" href="{% url 'delete-event' char.title %}">Delete</a>
+            </div>
+            {% elif var == 'images' %}
+            <div class="card container p-3 flexbox center text-center">
+                <img class="w-100" src="{{ char.cover.url }}">
+                <p class="w-100 btn" style="">{{ char.title }}</p>
+                {% comment %} <hr class="w-100" style="margin-top:-5px;"> {% endcomment %}
+                <a class="btn btn-primary" style="width:48%;" href="{% url 'edit-image' char.title %}">Edit</a>
+                <a class="btn btn-danger" style="width:48%;" href="{% url 'delete-image' char.title %}">Delete</a>
+            </div>
+            {% elif var == 'routes' %}
+            <div class="card container p-3 flexbox">
+                <p class="w-100"><u style="color:black;">Locality:</u> {{ char.locality }}</p>
+                <p class="w-100"><u style="color:black;">Bus No.:</u> {{ char.bus_no }}</p>
+                <p class="w-100"><u style="color:black;">Fees:</u> {{ char.fees }}</p>
+                <a class="btn btn-primary" style="width:48%;" href="{% url 'edit-route' char.locality %}">Edit</a>
+                <a class="btn btn-danger" style="width:48%;" href="{% url 'delete-route' char.locality %}">Delete</a>
+            </div>
+        
+        {% endif %}
+    {% endfor %}
+{% endblock sidebar %}

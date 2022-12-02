@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="w-100 container">
+    {% if form %}
+    <form method="POST">
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            {{ form|crispy }}
+            <button class="btn btn-outline-info material-icons" type="submit">search</button>
+        </fieldset>
+            
+        <script>
+            document.getElementById("id_text").placeholder = "Search Events";
+        </script>
+        
+        <style>
+            .textinput{
+                border:1px solid #17a2b8;
+            }
+            #div_id_text label{
+                display:none;
+            }
+            fieldset{
+                display:flex;
+                flex-wrap:wrap;
+                flex-direction:row;
+                gap:5px;
+            }
+            fieldset input{
+                width:115% !important;
+                border-top-right-radius:0 !important;
+                border-bottom-right-radius:0 !important;
+                border-right:0 !important;
+            }
+            fieldset button{
+                height:38px;
+                margin-left:25px;
+                border-top-left-radius:0 !important;
+                border-bottom-left-radius:0 !important;
+                border-left:0 !important;
+            }
+        </style>
+    </form>
+    {% endif %}
+
+    <div class="cards">
+        {% for event in events %}
+            <img class="card_wrapper" src="{{ event.cover.url }}" onclick="window.open('{% url 'event-info' event.title %}', '_self');">
+        {% endfor %}
+
+        {% if results %}
+            {% for result in results %}
+                <img class="card_wrapper" src="{{ result.cover.url }}" onclick="window.open('{% url 'event-info' result.title %}', '_self');">
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<style>
+    p{
+        color:#022e57;
+    }
+    .content{
+        background:transparent;
+    }
+
+
+    .cards{
+        column-count:2;
+        column-gap:0.5em;
+        max-width:1200px;
+        margin:0 auto;
+        padding:0px;
+        margin-bottom:25px;
+      }
+
+      .card_wrapper{
+        {% comment %} background-color:#eee; {% endcomment %}
+        display:inline-block;
+        margin:0 0 0.5em;
+        width:100%;
+        padding:0px;
+      }
+
+    @media only screen and (max-width: 420px) {
+            
+
+        .cards{
+          column-count:2;
+        }
+      }
+</style>
+{% endblock content %}

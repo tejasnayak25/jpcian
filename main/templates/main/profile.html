@@ -1,0 +1,72 @@
+{% extends 'reader/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            {% comment %} <p class="text-secondary">{{ user.email }}</p> {% endcomment %}
+        </div>
+        </div>
+        <!-- FORM HERE -->
+            {% comment %} <div class="form-group">
+                <a class="btn btn-outline-info" href="{% url 'profile-edit' %}">Update</a>
+            </div> {% endcomment %}
+
+            <div class="flexbox">
+                <a class="btn btn-info bg-main" href="{% url 'profile-edit' %}"><span class="material-icons">edit</span> Edit Profile</a>
+                <a class="btn btn-info bg-main" href="{% url 'profile-edit' %}"><span class="material-icons">notifications</span> Notifications</a>
+                <a class="btn btn-info bg-main" href="{% url 'profile-edit' %}"><span class="material-icons">token</span> Coins</a>
+                <a class="btn btn-danger" href="{% url 'profile-edit' %}"><span class="material-icons">delete</span> Delete Account</a>
+            </div>
+
+
+            <style>
+                .flexbox{
+                    display:flexbox;
+                    flex-direction:row;
+                    gap:10px;
+                }
+
+                .flexbox a{
+                    display:inline-flex;
+                    width:49%;
+                    padding:12px;
+                    height:50px;
+                    border:0;
+                    margin-bottom:5px;
+                }
+
+                .account-heading{
+                    margin-top:35px;
+                }
+
+                @media only screen and (max-width: 420px) {
+                    .account-img{
+                        width:70px;
+                        height:70px;
+                    }
+
+                    .account-heading{
+                        font-size:25px;
+                        margin-top:15px;
+                    }
+
+                    .flexbox a{
+                        width:100%;
+                    }
+                }
+            </style>
+    </div>
+{% endblock content %}
+
+
+
+{% block sidebar %}
+    <div class="flexbox">
+        <a class="btn btn-info bg-main w-100" href="{% url 'profile-edit' %}"><span class="material-icons">settings</span> Settings</a>
+        <a class="btn btn-info bg-main w-100" href="{% url 'reader-feedback' %}"><span class="material-icons">feedback</span> Feedback</a>
+        <a class="btn btn-info bg-main w-100" href="{% url 'reader-about' %}"><span class="material-icons">person</span> About Us</a>
+    </div>
+{% endblock sidebar %}

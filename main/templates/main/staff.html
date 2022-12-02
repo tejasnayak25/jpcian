@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="w-100 container">
+<div class="principal">
+    <div class="bg-head staff2 " style="background-image:url({{ staff.profile.url }});background-size: cover;"></div>
+</div>
+<h2 style="text-align:center;">{{ staff.name }}</h2>
+<h2 class="btn btn-success">{{ staff.gender }}</h2>
+<p>Education: {{ staff.education }}</p>
+<p>Subject: {{ staff.subject }}</p>
+<p>Experience: {{ staff.exp }}</p>
+<p class="card px-3 py-2 border-head text-muted">{{ staff.bio }}</p>
+</div>
+<style>
+    p{
+        color:#022e57;
+    }
+    .content{
+        background:transparent;
+    }
+</style>
+{% endblock content %}

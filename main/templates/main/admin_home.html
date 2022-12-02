@@ -1,0 +1,53 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container p-3">
+    <h2 class="pb-4 bb1">Welcome {{ user.username }}</h2>
+    <div class="w-100 main-div">
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'system' %}">Edit System Vars</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'contacts' %}">View Contacts</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'staff' %}">Edit Staff</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'course' %}">Edit Course</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'toppers' %}">Edit Toppers</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'events' %}">Edit Events</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'images' %}">Edit College Images</a>
+        <a class="btn btn-dark bg-head" href="{% url 'admin-edit' 'routes' %}">Edit Routes</a>
+    </div>
+</div>
+
+<style>
+
+
+    .content{
+        background:transparent;
+    }
+
+    .bb1{
+        border-bottom: 1px solid #1c202d;
+    }
+
+    .main-div{
+        display:grid;
+        grid-template-columns: repeat(2,1fr);
+        gap:0.5em;
+    }
+
+    .main-div a{
+          {% comment %} background-color:#eee; {% endcomment %}
+          display:inline-block;
+          margin:0 0 0.5em;
+          width:100%;
+          padding:25px;
+    }
+
+
+    @media only screen and (max-width: 420px) {
+        .main-div{
+            grid-template-columns: none;
+            gap:0.1em;
+        }
+        .main-div a{
+            padding:15px;
+        }
+    }
+</style>
+{% endblock content %}

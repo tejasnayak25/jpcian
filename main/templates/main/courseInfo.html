@@ -1,0 +1,201 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="w-100 container">
+<div class="principal">
+    <div class="bg-head event w-100 high-100"></div>
+</div>
+<h2 class="title">{{ course.name|upper }}</h2>
+
+<h6 class="btn btn-light card" style="text-align:left;">Fees: {{ course.fees }}</h6>
+<h6>Subjects:</h6>
+<div id="subjectHolder" class="flexbox card px-3 py-2 text-muted text-head" style="margin-bottom:25px;">
+    {% comment %} <button class="btn btn-outline-dark">Maths</button>
+    <button class="btn btn-outline-dark">Physics</button>
+    <button class="btn btn-outline-dark">Chemistry</button>
+    <button class="btn btn-outline-dark">Computer Science</button>
+    <button class="btn btn-outline-dark">Hindi</button>
+    <button class="btn btn-outline-dark">English</button> {% endcomment %}
+
+    {% comment %} <button class="btn btn-tertiary">{{ course.subjects }}</button> {% endcomment %}
+
+    <script>
+      var subjects = '{{ course.subjects }}'.split(",");
+      for(i=0; i<subjects.length; i++){
+        let button = document.createElement("button");
+        button.innerText = subjects[i];
+        button.setAttribute("class", "btn btn-outline-dark")
+        document.getElementById("subjectHolder").appendChild(button);
+      }
+    </script>
+</div>
+
+<h6>Faculty:</h6>
+<div class="otherStaff" style="margin-bottom:25px;">
+  {% for person in staff %}
+  <div class="bg-head staff " style="background-image:url({{ person.profile.url }});background-size: cover;"  onclick="window.open('{% url 'main-staff' person.name %}', '_self');"></div>
+  {% endfor %}
+  {% for person in otherStaff %}
+  <div class="bg-head staff " style="background-image:url({{ person.profile.url }});background-size: cover;"  onclick="window.open('{% url 'main-staff' person.name %}', '_self');"></div>
+  {% endfor %}
+</div>
+
+
+<h6>Toppers:</h6>
+<div class="flexbox card bg-tp p-2" style="margin-bottom:25px;">
+  <div class="high-100 px-3 btn btn-light card" style="padding-top:5rem;max-height:200px;"><</div>
+  <div id="topper-main" style="flex-grow:3;" class="high-100 card p-3">
+    <div class="principal">
+      <div class="bg-head staff " style="height:70px;width:70px;background-image:url({{ course.toppers.first.profile.url }});background-size: cover;"></div>
+    </div>
+    <p class="text-head" style="text-align:center;">
+      {{ course.toppers.first.name }}<br>
+      Batch: {{ course.toppers.first.batch }}<br>
+      Marks: {{ course.toppers.first.marks }}<br>
+    </p>
+  </div>
+  <div class="high-100 px-3 btn btn-light card" style="padding-top:5rem;max-height:200px;">></div>
+</div>
+
+<h6>Seats Available:</h6>
+<div class="flexbox card px-3 py-2 text-muted text-head" style="margin-bottom:25px;">{{ course.seats_ava }}</div>
+
+
+<script>
+  var names = [];
+  var batch = [];
+  var marks = [];
+  var profile = [];
+  let i=0;
+
+  
+
+  {% for topper in course.toppers.all %}
+    names[i] = '{{ topper.name }}';
+    batch[i] = '{{ topper.batch }}';
+    marks[i] = '{{ topper.marks }}';
+    profile[i] = '{{ topper.profile.url }}';
+    i++;
+  {% endfor %}
+
+  
+
+  
+  let host = document.getElementById("topper-main");
+  host.previousElementSibling.onclick = function() {
+    prevTopper();
+    host.previousElementSibling.onclick = function() {
+      prevTopper();
+    }
+  }
+
+  host.nextElementSibling.onclick = function() {
+    nextTopper();
+    host.nextElementSibling.onclick = function() {
+      nextTopper();
+    }
+  }
+
+
+  for(i=0;i<profile.length;i++) {
+    console.log(names[i]);
+    console.log(batch[i]);
+  }
+
+  var current = 0;
+  function prevTopper() {
+    let host = document.getElementById("topper-main");
+    if(current === 0){
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[profile.length - 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[names.length - 1]}<br>
+        Batch: ${batch[batch.length - 1]}<br>
+        Marks: ${marks[marks.length - 1]}<br>
+      </p>
+    </div>`;
+    current = names.length - 1;
+    } else {
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[current - 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[current - 1]}<br>
+        Batch: ${batch[current - 1]}<br>
+        Marks: ${marks[current - 1]}<br>
+      </p>
+    </div>`;
+    current--;
+    }
+  }
+
+
+
+  function nextTopper() {
+    let host = document.getElementById("topper-main");
+    if(current === (names.length - 1)){
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[0]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[0]}<br>
+        Batch: ${batch[0]}<br>
+        Marks: ${marks[0]}<br>
+      </p>
+    </div>`;
+    current = 0;
+    } else {
+      host.innerHTML = `<div class="principal">
+        <div class="bg-head staff " style="height:70px;width:70px;background-image:url(${profile[current + 1]});background-size: cover;"></div>
+      </div>
+      <p class="text-head" style="text-align:center;">
+        ${names[current + 1]}<br>
+        Batch: ${batch[current + 1]}<br>
+        Marks: ${marks[current + 1]}<br>
+      </p>
+    </div>`;
+    current++;
+    }
+  }
+
+
+</script>
+
+{% comment %} <h6 class="card px-3 py-2 text-muted text-head">Bio</h6> {% endcomment %}
+</div>
+<style>
+    p{
+        color:#022e57;
+    }
+    .content{
+        background:transparent;
+    }
+    .high-100{
+        height:200px;
+      }
+
+    .flexbox{
+        display:flex;
+        flex-wrap:wrap;
+        flex-direction:row;
+        gap:10px;
+    }
+
+    .gallery{
+        display:flex;
+        justify-content:center;
+        gap:10px;
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+
+    .otherStaff{
+        display:flex;
+        justify-content:center;
+        gap:10px;
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+</style>
+{% endblock content %}

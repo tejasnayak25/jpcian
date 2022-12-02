@@ -1,0 +1,436 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="JnanaGanga Pre-University College, Nellikatte, the college of your dreams!">
+    <meta name="keywords" content="college, university, jnanaganga, pre-university, nellikatte, kseeb, education">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
+
+    <script src="{% static 'main/main.js' %}"></script>
+
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+    </script><script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+
+    
+    {% if title %}
+        <title>JnanaGanga - {{ title }}</title>
+    {% else %}
+        <title>JnanaGanga</title>
+    {% endif %}
+
+
+
+
+
+
+    <style>
+      body::-webkit-scrollbar{
+        width:5px;
+        height:5px;
+    }
+    
+    body::-webkit-scrollbar-thumb{
+      background: #3b4460;
+    }
+    
+    body::-webkit-scrollbar-thumb:hover{
+        background:#428bca;
+    }
+
+
+    footer{
+      display:none;
+      position:fixed;
+      bottom:0;
+      border-radius:10px;
+      border-bottom-left-radius:0;
+      border-bottom-right-radius:0;
+    }
+
+    footer a{
+      width:18%;
+      text-align:center;
+    }
+
+    footer small{
+      font-size:10px;
+    }
+
+
+    .color-text{
+      color:#022e57;
+    }
+
+    .color-black{
+      color:#000;
+    }
+
+    {% comment %} .color-text:hover{
+      color:#3b4460;
+    } {% endcomment %}
+
+    .plus{
+      display:absolute;
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      border-radius:50%;
+      padding:14px;
+      border:1px solid #3b4460;
+      color:white;
+    }
+
+    @media only screen and (max-width: 420px) {
+      footer{
+        display:block;
+      }
+
+      .plus{
+        bottom:65px;
+      }
+    }
+
+      .content{
+        background:#3b4460;
+      }
+
+      .selected{
+        color:#428bca;
+      }
+      
+      .base{
+        position:fixed;
+        top:0;
+        background:black;
+        opacity:70%;
+        display:none;
+        animation:fadeIn 0.5s;
+      }
+
+      @keyframes fadeIn{
+        from{opacity:0;} to {opacity:70%;}
+      }
+
+    
+    </style>
+
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-head fixed-top">
+          <div class="container">
+            <a class="navbar-brand mr-4 text-main" href="/">JnanaGanga</a>
+            
+            <button class="navbar-toggler text-main" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="fi fi-sr-stairs text-main" style="font-size:23px;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="/">Home</a>
+                <a class="nav-item nav-link" href="{% url 'main-events' %}">Events</a>
+                {% comment %} <a class="nav-item nav-link" href="/">New Stories</a>
+                <a class="nav-item nav-link" href="/">Genre</a> {% endcomment %}
+                <a class="nav-item nav-link" href="{% url 'main-routes' %}">Routes</a>
+                <a class="nav-item nav-link" href="{% url 'main-contact' %}">Contact</a>
+                {% comment %} <a class="nav-item nav-link" href="/">About</a> {% endcomment %}
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      
+
+    {% comment %} {% block content %}{% endblock %} {% endcomment %}
+
+
+
+
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8 main-container">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+          </div>
+          <div class="col-md-4 p-0">
+            <div class="content-section content">
+              {% block sidebar %}{% endblock %}
+            </div>
+{% comment %} 
+            <div class="pb-5"></div> {% endcomment %}
+          </div>
+        </div>
+      </main>
+
+      
+
+
+      {% comment %} <footer id="main-footer" class="card-footer w-100 bg-main p-0 pt-2 pb-2 shadow-lg" style="border-top:1px solid #3b4460;">
+        <a class="btn btn-info bg-main p-1 px-3" href="{% url 'main-home' %}" style="border:0;"><i class="fi fi-sr-home"></i><br><small class="text-muted">Home</small></a>
+        <a class="btn btn-info bg-main p-1 px-3" href="/" style="border:0;"><i class="fi fi-br-book-open-cover"></i><br><small class="text-muted">Explore</small></a>
+        <a class="btn btn-info bg-main p-1 px-3" href="/" style="border:0;"><i class="fi fi-br-circle-phone-flip"></i><br><small class="text-muted">Contact</small></a>
+        <a class="btn btn-info bg-main p-1 px-3" href="/" style="border:0;"><i class="fi fi-sr-bookmark"></i><br><small class="text-muted">Library</small></a>
+        <a class="btn btn-info bg-main p-1 px-3" href="/" style="border:0;"><i class="fi fi-sr-user"></i><br><small class="text-muted">Profile</small></a>
+        
+      </footer> {% endcomment %}
+
+
+      
+
+      
+    <script>
+      
+      document.querySelector("#main-footer").querySelectorAll("a").forEach(elem => {
+        if(elem.innerText.toLowerCase().includes(location.pathname.split("/")[1])) {
+          elem.classList.add("selected");
+        }
+      });
+
+    </script>
+
+
+      {% comment %} <a class="btn btn-light plus bg-main" href="{% url 'contribute-new' %}"><i class="fi fi-br-plus"></i></a> {% endcomment %}
+
+
+      <div id="base" class="base w-100 h-100"></div>
+
+
+      <div id="share-module" class="container shadow-lg bg-head share-module p-3">
+        <h3 class="w-100 text-main" style="width:100%;">Share</h3>
+        <div class="share-btns w-100">
+          <a id="twitter-share" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+
+        <!-- Facebook (url) -->
+        <a id="facebook-share">
+          <i class="fab fa-facebook-f"></i>
+      </a>
+      
+      <!-- Reddit (url, title) -->
+      <a id="reddit-share">
+          <i class="fab fa-reddit"></i>
+      </a>
+      
+      <!-- LinkedIn (url, title, summary, source url) -->
+      <a id="linkedin-share">
+          <i class="fab fa-linkedin"></i>
+      </a>
+      
+      <!-- Email (subject, body) -->
+      <a id="mail-share">
+          <i class="material-icons">mail</i>
+      </a>
+      <a id="whatsapp-share" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i>
+      </a>
+
+      <a id="copybtn">
+          <i class="fi fi-sr-copy-alt"></i>
+      </a>
+    </ul>
+      <input id="pageUrl" class="pageUrl text-head" type="text" readonly>
+        </div>
+      </div>
+
+      <script>
+
+        document.getElementById("twitter-share").href = "https://twitter.com/share?url=" + location.toString() + "&text={{ title }}%2C%20%0A{{ desc }}%0AGet%20your%20child%20enrolled%20today!%0A%0A";
+        document.getElementById("facebook-share").href = "https://www.facebook.com/sharer/sharer.php?u=" + location.toString();
+        document.getElementById("reddit-share").href = "https://reddit.com/submit?url=" + location.toString() + "&title={{ title }}";
+        document.getElementById("linkedin-share").href = "https://www.linkedin.com/shareArticle?url=" + location.toString() + "&title={{ title }}&summary={{ desc }}&source=" + location.toString();
+        document.getElementById("mail-share").href = "mailto:?subject={{ title }}&body={{ desc }}%0A%0AGet%20your%20child%20enrolled%20today!%0A%0A" + location.toString();
+        document.getElementById("whatsapp-share").href = "https://api.whatsapp.com/send/?text="+ location.toString() +"%0A%0A{{ title }}%2C%20%0A{{ desc }}%0A%0AGet%20your%20child%20enrolled%20today!%0A%0A";
+        
+        
+        document.getElementById("pageUrl").setAttribute("value", location.toString());
+
+        function share() {
+          var copy = document.getElementById("copybtn");
+          document.getElementById("pageUrl").select(); //select input value
+          if(document.execCommand("copy")){ //if the selected text copy
+            copy.style.background = "#fff5fd";
+            setTimeout(()=>{
+              window.getSelection().removeAllRanges(); //remove selection from document
+              copy.style.background = "#3b4460";
+          }, 3000);
+        }
+      }
+
+
+        document.getElementById("copybtn").onclick = function() {
+        share();
+        }
+        
+      </script>
+
+      <script>
+
+        function shareNow(){
+          document.getElementById("base").style.display = "block";
+            document.getElementById("share-module").style.display = "block";
+    
+            document.getElementById("base").onclick = function() {
+                document.getElementById("base").style.display = "none";
+                document.getElementById("share-module").style.display = "none";
+            }
+        }
+    </script>
+
+      <style>
+        {% comment %} .pageUrl{
+          display:none;
+        } {% endcomment %}
+
+        .share-module{
+          {% comment %} display:flex; {% endcomment %}
+          position:fixed;
+          display:none;
+          width:500px;
+          left:50%;
+          margin-left:-250px;
+          bottom:0;
+          {% comment %} height:100px; {% endcomment %}
+          border-top-left-radius:10px;
+          border-top-right-radius:10px;
+          color:#fff5fd;
+          border:1px solid #3b4460;
+          border-bottom:none;
+          justify-self:center;
+          animation:share-module 0.5s;
+        }
+
+        .share-close{
+          animation:share-module 1s reverse;
+        }
+
+        @keyframes share-module{
+          from{opacity:0;bottom:-100px;} to {opacity:1;bottom:0px;}
+        }
+
+
+        @media only screen and (max-width: 420px) {
+          .share-module{
+            width:100vw;
+            left:0;
+            margin-left:0;
+          }
+        }
+
+        .share-btns{
+          display:flex;
+          flex-direction:row;
+          flex-wrap:wrap;
+          gap:10px;
+          justify-content:center;
+        }
+
+        .share-btns a{
+          height:55px;
+          width:55px;
+          padding:15px;
+          background:#3b4460;
+          text-align:center;
+          font-size:25px;
+          border-radius:50%;
+        }
+
+
+        .share-btns a:nth-child(1){
+          color: #1877F2;
+          border-color: #b7d4fb;
+        }
+        .share-btns a:nth-child(1):hover{
+          background: #1877F2;
+        }
+        .share-btns a:nth-child(2){
+          color: #46C1F6;
+          border-color: #b6e7fc;
+        }
+        .share-btns a:nth-child(2):hover{
+          background: #46C1F6;
+        }
+        .share-btns a:nth-child(3){
+          color: #ff0000;
+          border-color: #f5bccf;
+        }
+        .share-btns a:nth-child(3):hover{
+          background: #ff0000;
+        }
+        .share-btns a:nth-child(5){
+          color: #00ccff;
+          border-color: #bef4d2;
+        }
+        .share-btns a:nth-child(5):hover{
+          background: #00ccff;
+        }
+        .share-btns a:nth-child(4){
+          color: #0088cc;
+          border-color: #b3e6ff;
+        }
+        .share-btns a:nth-child(4):hover{
+          background: #0088cc;
+        }
+        
+        .share-btns a:nth-child(6){
+          color: #00cc2c;
+          border-color: #5d8567;
+        }
+        .share-btns a:nth-child(6):hover{
+          background: #00ff62;
+        }
+        .share-btns a:hover{
+          color: #fff;
+          border-color: transparent;
+        }
+        .share-btns a:hover i{
+          transform: scale(1.2);
+        }
+      </style>
+
+      {% comment %} <script>
+        main();
+      </script> {% endcomment %}
+
+    
+
+    <!-- Optional JavaScript -->
+    
+  
+  
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

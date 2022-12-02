@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+        <!-- FORM HERE -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Contact Us</legend>
+                {{ form|crispy }}
+                
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+
+
+        <script>
+            document.getElementById("id_name").setAttribute("placeholder", "Name");
+            document.getElementById("id_email").setAttribute("placeholder", "email@xyz.com");
+            document.getElementById("id_message").setAttribute("placeholder", "How can we help you?");
+        </script>
+
+        <style>
+
+            *{
+                color:#022e57;
+            }
+
+            .account-heading{
+                margin-top:35px;
+            }
+
+            @media only screen and (max-width: 420px) {
+                .account-img{
+                    width:70px;
+                    height:70px;
+                }
+
+                .account-heading{
+                    font-size:25px;
+                    margin-top:15px;
+                }
+            }
+        </style>
+</div>
+{% endblock content %}
+
+{% block sidebar %}
+        <img class="w-100" src="../media/Support.png">
+
+        <p class="p">Our support team is always here to help you! <br>A quick message and our support team will contact you within a few days!</p>
+
+        <style>
+            .content{
+                padding:0;
+                background:transparent;
+            }
+            .p{
+                padding:10px;
+            }
+        </style>
+{% endblock sidebar %}
